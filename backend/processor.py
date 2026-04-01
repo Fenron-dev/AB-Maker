@@ -81,7 +81,19 @@ def run_conversion(job: dict, progress_cb: Callable) -> dict:
     if not progress_cb(0, 0, "Loading TTS engine...", f"Loading: {engine_id}"):
         raise RuntimeError("Cancelled")
 
-    engine = get_engine(engine_id)
+    try:
+        engine = get_engine(engine_id)
+    except ValueError:
+        from .engines import get_available_engines
+        available = [e.id for e in get_available_engines()]
+        hint = (
+            f"Engine '{engine_id}' ist in dieser Sitzung nicht verfügbar.\n"
+            f"Starte AB-Maker mit der passenden Umgebung neu "
+            f"(start.sh → Engine wählen).\n"
+            f"Verfügbare Engines in dieser Sitzung: "
+            f"{', '.join(available) if available else 'keine'}"
+        )
+        raise RuntimeError(hint)
 
     # Heartbeat thread: sends periodic status while engine.load() blocks
     _load_status = ["Loading TTS engine..."]
