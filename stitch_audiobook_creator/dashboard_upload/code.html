@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Sonic Architect - Obsidian Studio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface-variant": "#c9c4d7",
+              "background": "#11131c",
+              "secondary": "#bac6e7",
+              "secondary-fixed": "#d9e2ff",
+              "on-secondary": "#24304a",
+              "on-tertiary-container": "#e0ccff",
+              "surface-container-highest": "#32343e",
+              "inverse-primary": "#5d41db",
+              "surface-container-low": "#191b24",
+              "on-secondary-fixed": "#0e1b34",
+              "on-primary": "#2e009c",
+              "error": "#ffb4ab",
+              "tertiary-container": "#6d43b5",
+              "inverse-surface": "#e1e1ef",
+              "surface-variant": "#32343e",
+              "surface-bright": "#373943",
+              "on-tertiary-fixed-variant": "#582a9f",
+              "surface-dim": "#11131c",
+              "on-primary-fixed-variant": "#4420c3",
+              "on-error-container": "#ffdad6",
+              "on-primary-fixed": "#1a0063",
+              "surface-container": "#1d1f29",
+              "on-primary-container": "#d7ceff",
+              "outline-variant": "#484554",
+              "secondary-fixed-dim": "#bac6e7",
+              "on-background": "#e1e1ef",
+              "tertiary-fixed-dim": "#d4bbff",
+              "surface": "#11131c",
+              "outline": "#938ea0",
+              "primary": "#c8bfff",
+              "error-container": "#93000a",
+              "on-surface": "#e1e1ef",
+              "secondary-container": "#3b4662",
+              "on-error": "#690005",
+              "on-secondary-container": "#a9b5d5",
+              "surface-container-high": "#282933",
+              "tertiary": "#d4bbff",
+              "surface-tint": "#c8bfff",
+              "tertiary-fixed": "#ebdcff",
+              "inverse-on-surface": "#2e303a",
+              "primary-fixed-dim": "#c8bfff",
+              "on-tertiary": "#400688",
+              "primary-fixed": "#e5deff",
+              "on-secondary-fixed-variant": "#3b4662",
+              "surface-container-lowest": "#0c0e17",
+              "primary-container": "#5a3ed8",
+              "on-tertiary-fixed": "#260058"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      ::-webkit-scrollbar { width: 4px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #32343e; border-radius: 10px; }
+      .glass-panel {
+        backdrop-filter: blur(20px);
+        background: rgba(40, 41, 51, 0.8);
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30 min-h-screen flex flex-col md:flex-row">
+<!-- NavigationDrawer (Sidebar for Desktop) -->
+<aside class="hidden md:flex flex-col h-full w-64 fixed left-0 top-0 z-40 bg-[#1d1f29] shadow-[20px_0_40px_rgba(12,14,23,0.4)] pt-20">
+<div class="px-6 mb-12">
+<h1 class="font-headline font-black text-[#e1e1ef] text-2xl">Obsidian Studio</h1>
+</div>
+<nav class="flex flex-col space-y-1">
+<!-- Active: Dashboard -->
+<a class="bg-[#32343e] text-[#c8bfff] rounded-lg mx-2 my-1 px-4 py-3 flex items-center gap-3 font-medium text-sm tracking-wide transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="text-[#e1e1ef]/70 hover:text-[#e1e1ef] hover:bg-[#32343e]/50 mx-2 my-1 px-4 py-3 flex items-center gap-3 font-medium text-sm tracking-wide transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">settings_voice</span>
+<span>Configuration</span>
+</a>
+<a class="text-[#e1e1ef]/70 hover:text-[#e1e1ef] hover:bg-[#32343e]/50 mx-2 my-1 px-4 py-3 flex items-center gap-3 font-medium text-sm tracking-wide transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">sync_alt</span>
+<span>Progress</span>
+</a>
+<a class="text-[#e1e1ef]/70 hover:text-[#e1e1ef] hover:bg-[#32343e]/50 mx-2 my-1 px-4 py-3 flex items-center gap-3 font-medium text-sm tracking-wide transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined">library_music</span>
+<span>Library</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col md:ml-64 min-h-screen pb-24 md:pb-8">
+<!-- TopAppBar -->
+<header class="bg-[#11131c] sticky top-0 z-50 flex justify-between items-center w-full px-6 py-4">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-[#c8bfff] active:scale-95 transition-transform">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="text-2xl font-bold bg-gradient-to-br from-[#c8bfff] to-[#5a3ed8] bg-clip-text text-transparent font-headline tracking-tight">The Sonic Architect</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/20">
+<img alt="User Profile" data-alt="professional male portrait with soft studio lighting and dark minimalist background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAE0Y_U6XMes_fpRR-gEkg0TjIvb_Gt7A9oZc-oWrFlhXrGHDxKa7uvC1vnFa00gFzcDEU36WG3NIDzdMqYoRGnW_A8g9y8PQR0E4sWy6z10t2SyFRtkP4GKAPb8qPeg5G5SnWZGrM1wGiMXhn4LHO_dawcBpR8-qWRuiBVJw4-yYhVTJzlLUTFZ2Eg9jPMEVoYIkfOU04ZAHa_AcE0VaiUCxofyskE8idH-HO18Nq3wrumfZxg5Dy1i9InuezaG7fNlxfL2DMJARb6"/>
+</div>
+</div>
+</header>
+<!-- Canvas Interior -->
+<div class="px-6 py-8 max-w-7xl mx-auto w-full space-y-10">
+<!-- Hero / Upload Section -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+<div class="lg:col-span-8 group relative overflow-hidden rounded-3xl bg-surface-container-low p-1 border border-outline-variant/10 transition-all hover:border-primary/20">
+<div class="h-full w-full rounded-[1.4rem] bg-surface-container-lowest border-2 border-dashed border-outline-variant/30 flex flex-col items-center justify-center p-12 text-center space-y-6 transition-colors group-hover:bg-surface-container/50">
+<div class="w-20 h-20 rounded-2xl bg-primary-container/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined !text-4xl">upload_file</span>
+</div>
+<div class="space-y-2">
+<h2 class="font-headline text-2xl font-bold text-on-surface">Initialize New Project</h2>
+<p class="text-on-surface-variant max-w-sm mx-auto font-body text-sm leading-relaxed">
+                                Seamlessly transform EPUB, PDF, or TXT into high-fidelity spatial audio. Drag and drop or browse local files.
+                            </p>
+</div>
+<button class="px-8 py-3 bg-gradient-to-br from-[#c8bfff] to-[#5a3ed8] text-on-primary rounded-full font-bold tracking-wide shadow-xl shadow-primary-container/20 active:scale-95 transition-all">
+                            Start New Conversion
+                        </button>
+<div class="flex gap-4 pt-4">
+<span class="text-[10px] uppercase tracking-[0.05rem] font-semibold text-outline px-3 py-1 bg-surface-container rounded-lg">EPUB</span>
+<span class="text-[10px] uppercase tracking-[0.05rem] font-semibold text-outline px-3 py-1 bg-surface-container rounded-lg">PDF</span>
+<span class="text-[10px] uppercase tracking-[0.05rem] font-semibold text-outline px-3 py-1 bg-surface-container rounded-lg">MOBI</span>
+</div>
+</div>
+</div>
+<!-- Technical Stats (Asymmetric Accent) -->
+<div class="lg:col-span-4 flex flex-col gap-4">
+<div class="flex-1 glass-panel rounded-3xl p-6 flex flex-col justify-between border border-outline-variant/10">
+<span class="text-label-sm uppercase tracking-widest text-primary/70 font-bold">Studio Uptime</span>
+<div>
+<span class="text-4xl font-headline font-black text-on-surface">1,248</span>
+<span class="text-on-surface-variant text-sm block">Hours synthesized</span>
+</div>
+<div class="h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-2/3 bg-primary rounded-full"></div>
+</div>
+</div>
+<div class="flex-1 bg-primary-container rounded-3xl p-6 flex flex-col justify-between text-on-primary-container">
+<span class="text-label-sm uppercase tracking-widest font-bold opacity-70">Library Capacity</span>
+<div>
+<span class="text-4xl font-headline font-black">4.2 TB</span>
+<span class="opacity-80 text-sm block">High-fidelity storage used</span>
+</div>
+<span class="material-symbols-outlined self-end !text-3xl opacity-50">analytics</span>
+</div>
+</div>
+</section>
+<!-- Recent Conversions Section -->
+<section class="space-y-6">
+<div class="flex justify-between items-end px-2">
+<div class="space-y-1">
+<h3 class="font-headline text-xl font-bold text-on-surface">Active Transmissions</h3>
+<p class="text-on-surface-variant text-sm">Monitor your current obsidian studio processes</p>
+</div>
+<button class="text-primary text-sm font-semibold flex items-center gap-1 hover:underline">
+                        View All History <span class="material-symbols-outlined !text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 gap-3">
+<!-- Item 1: In Progress -->
+<div class="group flex flex-col md:flex-row md:items-center justify-between p-5 bg-surface-container rounded-2xl border border-transparent hover:bg-surface-container-highest/60 transition-all duration-300">
+<div class="flex items-center gap-5">
+<div class="w-12 h-12 rounded-xl bg-surface-container-lowest flex items-center justify-center text-primary relative">
+<span class="material-symbols-outlined">graphic_eq</span>
+<div class="absolute -top-1 -right-1 w-3 h-3 bg-tertiary rounded-full animate-pulse"></div>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">The Silent Patient.epub</h4>
+<div class="flex items-center gap-3 mt-1">
+<span class="text-[10px] uppercase tracking-[0.05rem] font-bold text-on-surface-variant/70 flex items-center gap-1">
+<span class="material-symbols-outlined !text-xs">record_voice_over</span> Neural Engine v2
+                                    </span>
+<span class="text-[10px] uppercase tracking-[0.05rem] font-bold text-tertiary">Synthesizing...</span>
+</div>
+</div>
+</div>
+<div class="mt-4 md:mt-0 md:w-64 flex flex-col gap-2">
+<div class="flex justify-between text-[10px] font-black uppercase text-on-surface-variant">
+<span>Encoding 48kHz</span>
+<span>64%</span>
+</div>
+<div class="h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full w-[64%] bg-gradient-to-r from-primary to-tertiary rounded-full shadow-[0_0_10px_rgba(200,191,255,0.4)]"></div>
+</div>
+</div>
+</div>
+<!-- Item 2: Completed -->
+<div class="group flex flex-col md:flex-row md:items-center justify-between p-5 bg-surface-container rounded-2xl border border-transparent hover:bg-surface-container-highest/60 transition-all duration-300">
+<div class="flex items-center gap-5">
+<div class="w-12 h-12 rounded-xl bg-surface-container-lowest flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Atomic Habits - Mastery Edition.pdf</h4>
+<div class="flex items-center gap-3 mt-1">
+<span class="text-[10px] uppercase tracking-[0.05rem] font-bold text-on-surface-variant/70 flex items-center gap-1">
+<span class="material-symbols-outlined !text-xs">record_voice_over</span> ElevenLabs Pro
+                                    </span>
+<span class="text-[10px] uppercase tracking-[0.05rem] font-bold text-secondary">Completed</span>
+</div>
+</div>
+</div>
+<div class="mt-4 md:mt-0 flex gap-2">
+<button class="p-2 rounded-lg bg-surface-container-highest text-on-surface hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-2 rounded-lg bg-surface-container-highest text-on-surface hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">play_arrow</span>
+</button>
+</div>
+</div>
+<!-- Item 3: Failed -->
+<div class="group flex flex-col md:flex-row md:items-center justify-between p-5 bg-surface-container rounded-2xl border border-transparent hover:bg-surface-container-highest/60 transition-all duration-300">
+<div class="flex items-center gap-5">
+<div class="w-12 h-12 rounded-xl bg-surface-container-lowest flex items-center justify-center text-error">
+<span class="material-symbols-outlined">error</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Cloud Native Patterns.txt</h4>
+<div class="flex items-center gap-3 mt-1">
+<span class="text-[10px] uppercase tracking-[0.05rem] font-bold text-on-surface-variant/70 flex items-center gap-1">
+<span class="material-symbols-outlined !text-xs">record_voice_over</span> Whisper ASR
+                                    </span>
+<span class="text-[10px] uppercase tracking-[0.05rem] font-bold text-error">Format Error</span>
+</div>
+</div>
+</div>
+<div class="mt-4 md:mt-0">
+<button class="px-4 py-2 rounded-lg border border-error/30 text-error text-[10px] font-bold uppercase tracking-wider hover:bg-error/10 transition-colors">
+                                Retry Process
+                            </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe pt-2 bg-[#1d1f29]/80 backdrop-blur-xl border-t border-[#32343e]/15 z-50 rounded-t-2xl shadow-[0_-10px_30px_rgba(12,14,23,0.3)]">
+<!-- Active Tab: Dashboard -->
+<a class="flex flex-col items-center justify-center text-[#c8bfff] bg-[#32343e] rounded-xl px-3 py-1 tap-highlight-transparent active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
+<span class="font-label text-[10px] uppercase tracking-[0.05rem] font-semibold mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e1e1ef]/60 tap-highlight-transparent active:scale-90 transition-transform hover:text-[#e1e1ef]" href="#">
+<span class="material-symbols-outlined" data-icon="graphic_eq">graphic_eq</span>
+<span class="font-label text-[10px] uppercase tracking-[0.05rem] font-semibold mt-1">Engine</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e1e1ef]/60 tap-highlight-transparent active:scale-90 transition-transform hover:text-[#e1e1ef]" href="#">
+<span class="material-symbols-outlined" data-icon="hourglass_empty">hourglass_empty</span>
+<span class="font-label text-[10px] uppercase tracking-[0.05rem] font-semibold mt-1">Status</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#e1e1ef]/60 tap-highlight-transparent active:scale-90 transition-transform hover:text-[#e1e1ef]" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label text-[10px] uppercase tracking-[0.05rem] font-semibold mt-1">Files</span>
+</a>
+</nav>
+<!-- Desktop Floating Action Button (Optional contextual element) -->
+<div class="hidden lg:block fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 rounded-2xl bg-primary text-on-primary flex items-center justify-center shadow-2xl shadow-primary/40 hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined !text-3xl">add</span>
+</button>
+</div>
+</body></html>

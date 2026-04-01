@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AB-Maker – The Sonic Architect</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+  <script id="tw-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "background":                 "#11131c",
+            "on-background":              "#e1e1ef",
+            "surface":                    "#11131c",
+            "surface-dim":                "#11131c",
+            "surface-bright":             "#373943",
+            "surface-container-lowest":   "#0c0e17",
+            "surface-container-low":      "#191b24",
+            "surface-container":          "#1d1f29",
+            "surface-container-high":     "#282933",
+            "surface-container-highest":  "#32343e",
+            "surface-variant":            "#32343e",
+            "on-surface":                 "#e1e1ef",
+            "on-surface-variant":         "#c9c4d7",
+            "primary":                    "#c8bfff",
+            "primary-container":          "#5a3ed8",
+            "primary-fixed":              "#e5deff",
+            "primary-fixed-dim":          "#c8bfff",
+            "on-primary":                 "#2e009c",
+            "on-primary-container":       "#d7ceff",
+            "on-primary-fixed":           "#1a0063",
+            "on-primary-fixed-variant":   "#4420c3",
+            "inverse-primary":            "#5d41db",
+            "secondary":                  "#bac6e7",
+            "secondary-container":        "#3b4662",
+            "on-secondary":               "#24304a",
+            "on-secondary-container":     "#a9b5d5",
+            "tertiary":                   "#d4bbff",
+            "tertiary-container":         "#6d43b5",
+            "tertiary-fixed":             "#ebdcff",
+            "tertiary-fixed-dim":         "#d4bbff",
+            "on-tertiary":                "#400688",
+            "on-tertiary-container":      "#e0ccff",
+            "on-tertiary-fixed":          "#260058",
+            "outline":                    "#938ea0",
+            "outline-variant":            "#484554",
+            "error":                      "#ffb4ab",
+            "error-container":            "#93000a",
+            "on-error":                   "#690005",
+            "on-error-container":         "#ffdad6",
+            "surface-tint":               "#c8bfff",
+            "inverse-surface":            "#e1e1ef",
+            "inverse-on-surface":         "#2e303a",
+          },
+          fontFamily: {
+            headline: ["Manrope"],
+            body:     ["Inter"],
+            label:    ["Inter"],
+            mono:     ["ui-monospace", "monospace"],
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            sm:   "0.375rem",
+            md:   "0.5rem",
+            lg:   "0.75rem",
+            xl:   "1rem",
+            "2xl":"1.25rem",
+            "3xl":"1.5rem",
+            full: "9999px",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* Material Symbols defaults */
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .icon-fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar          { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track    { background: transparent; }
+    ::-webkit-scrollbar-thumb    { background: #32343e; border-radius: 10px; }
+
+    /* Sunken input style */
+    .sunken-input {
+      background-color: #0c0e17;
+      border: none;
+      transition: background-color 0.2s;
+    }
+    .sunken-input:focus {
+      background-color: #191b24;
+      outline: none;
+      box-shadow: none;
+    }
+
+    /* Glass panel */
+    .glass-panel {
+      backdrop-filter: blur(20px);
+      background: rgba(40, 41, 51, 0.8);
+    }
+
+    /* Waveform animation */
+    .waveform-bar {
+      animation: wave-pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes wave-pulse {
+      0%, 100% { height: 20%; }
+      50%       { height: 80%; }
+    }
+
+    /* No-select on nav icons */
+    nav { user-select: none; }
+
+    /* Gradient text helper */
+    .gradient-text {
+      background: linear-gradient(135deg, #c8bfff, #5a3ed8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    body { min-height: 100dvh; }
+  </style>
+</head>
+
+<body class="bg-background text-on-background font-body selection:bg-primary/30 flex overflow-hidden h-screen">
+
+  <!-- ── Sidebar (desktop) ──────────────────────────────────── -->
+  <aside id="sidebar"
+    class="hidden md:flex flex-col h-screen w-64 shrink-0 bg-surface-container
+           shadow-[4px_0_32px_rgba(12,14,23,0.5)] z-40 overflow-y-auto">
+
+    <!-- Branding -->
+    <div class="px-6 pt-7 pb-6 shrink-0">
+      <h1 class="font-headline font-black text-2xl gradient-text tracking-tight">
+        The Sonic Architect
+      </h1>
+      <p class="text-[10px] uppercase tracking-[0.12em] text-outline mt-1">Obsidian Studio</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex flex-col gap-0.5 px-2 flex-1">
+      <a data-view="dashboard"
+         class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium tracking-wide
+                text-on-surface/60 hover:text-on-surface hover:bg-surface-container-highest/50
+                transition-all cursor-pointer active:scale-[0.98]">
+        <span class="material-symbols-outlined">upload_file</span>
+        <span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+      <a data-view="config"
+         class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium tracking-wide
+                text-on-surface/60 hover:text-on-surface hover:bg-surface-container-highest/50
+                transition-all cursor-pointer active:scale-[0.98]">
+        <span class="material-symbols-outlined">settings_voice</span>
+        <span data-i18n="nav_config">Configuration</span>
+      </a>
+      <a data-view="progress"
+         class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium tracking-wide
+                text-on-surface/60 hover:text-on-surface hover:bg-surface-container-highest/50
+                transition-all cursor-pointer active:scale-[0.98]">
+        <span class="material-symbols-outlined">sync_alt</span>
+        <span data-i18n="nav_progress">Progress</span>
+        <span id="progress-badge"
+              class="hidden ml-auto w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+      </a>
+      <a data-view="library"
+         class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium tracking-wide
+                text-on-surface/60 hover:text-on-surface hover:bg-surface-container-highest/50
+                transition-all cursor-pointer active:scale-[0.98]">
+        <span class="material-symbols-outlined">library_music</span>
+        <span data-i18n="nav_library">Library</span>
+      </a>
+      <a data-view="settings"
+         class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium tracking-wide
+                text-on-surface/60 hover:text-on-surface hover:bg-surface-container-highest/50
+                transition-all cursor-pointer active:scale-[0.98]">
+        <span class="material-symbols-outlined">tune</span>
+        <span data-i18n="nav_settings">Settings</span>
+      </a>
+    </nav>
+
+    <!-- Footer info -->
+    <div class="px-6 py-4 shrink-0 border-t border-outline-variant/10">
+      <p class="text-[10px] text-outline">AB-Maker v1.0</p>
+    </div>
+  </aside>
+
+  <!-- ── Main area ──────────────────────────────────────────── -->
+  <div class="flex flex-col flex-1 min-w-0 overflow-hidden">
+
+    <!-- Top bar -->
+    <header class="h-16 shrink-0 bg-background/90 backdrop-blur-sm z-30
+                   flex items-center justify-between px-6
+                   border-b border-outline-variant/10">
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn"
+              class="md:hidden text-primary p-1 rounded-lg hover:bg-surface-container-highest transition-colors">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+
+      <!-- Title (mobile) -->
+      <span class="md:hidden font-headline font-bold text-lg gradient-text">
+        AB-Maker
+      </span>
+
+      <!-- Right actions -->
+      <div class="flex items-center gap-2 ml-auto">
+        <div id="active-job-indicator" class="hidden items-center gap-2 text-xs text-tertiary font-medium">
+          <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+          <span data-i18n="converting">Converting…</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- View container -->
+    <main id="view-container" class="flex-1 overflow-y-auto"></main>
+  </div>
+
+  <!-- ── Mobile bottom nav ──────────────────────────────────── -->
+  <nav class="md:hidden fixed bottom-0 left-0 w-full z-50
+              flex justify-around items-center px-2 pt-2 pb-safe
+              bg-surface-container/90 backdrop-blur-xl
+              border-t border-outline-variant/10
+              shadow-[0_-8px_24px_rgba(12,14,23,0.4)]">
+    <a data-view="dashboard"
+       class="mob-nav flex flex-col items-center py-1 px-3 rounded-xl text-on-surface/50
+              hover:text-on-surface transition-all active:scale-90">
+      <span class="material-symbols-outlined text-xl">upload_file</span>
+      <span class="text-[9px] uppercase tracking-wider font-semibold mt-0.5" data-i18n="nav_dashboard">Dashboard</span>
+    </a>
+    <a data-view="config"
+       class="mob-nav flex flex-col items-center py-1 px-3 rounded-xl text-on-surface/50
+              hover:text-on-surface transition-all active:scale-90">
+      <span class="material-symbols-outlined text-xl">settings_voice</span>
+      <span class="text-[9px] uppercase tracking-wider font-semibold mt-0.5" data-i18n="nav_config">Config</span>
+    </a>
+    <a data-view="progress"
+       class="mob-nav flex flex-col items-center py-1 px-3 rounded-xl text-on-surface/50
+              hover:text-on-surface transition-all active:scale-90">
+      <span class="material-symbols-outlined text-xl">sync_alt</span>
+      <span class="text-[9px] uppercase tracking-wider font-semibold mt-0.5" data-i18n="nav_progress">Progress</span>
+    </a>
+    <a data-view="library"
+       class="mob-nav flex flex-col items-center py-1 px-3 rounded-xl text-on-surface/50
+              hover:text-on-surface transition-all active:scale-90">
+      <span class="material-symbols-outlined text-xl">library_music</span>
+      <span class="text-[9px] uppercase tracking-wider font-semibold mt-0.5" data-i18n="nav_library">Library</span>
+    </a>
+    <a data-view="settings"
+       class="mob-nav flex flex-col items-center py-1 px-3 rounded-xl text-on-surface/50
+              hover:text-on-surface transition-all active:scale-90">
+      <span class="material-symbols-outlined text-xl">tune</span>
+      <span class="text-[9px] uppercase tracking-wider font-semibold mt-0.5" data-i18n="nav_settings">Settings</span>
+    </a>
+  </nav>
+
+  <!-- ── Toast container ───────────────────────────────────── -->
+  <div id="toasts"
+       class="fixed top-4 right-4 z-[100] flex flex-col gap-2 pointer-events-none">
+  </div>
+
+  <!-- ── Scripts ───────────────────────────────────────────── -->
+  <script type="module" src="/static/js/app.js"></script>
+</body>
+</html>

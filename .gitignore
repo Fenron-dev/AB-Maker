@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+
+# App data (contains local paths and personal files)
+data/config.json
+data/jobs.json
+data/uploads/
+
+# Claude Code local settings
+.claude/
+
+# Desktop shortcut (machine-specific)
+*.desktop
+
+# Build output
+dist/
+build/
+*.spec
+
+# OS
+.DS_Store
+Thumbs.db

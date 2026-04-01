@@ -1,0 +1,13 @@
+{
+  "output_dir": "",
+  "cache_dir": "",
+  "model_dir": "",
+  "default_engine": "qwen3-tts",
+  "default_output_format": "m4b",
+  "default_language": "English",
+  "default_speaker": "sohee",
+  "default_model_size": "1.7b",
+  "max_words_per_chunk": 150,
+  "pause_between_chunks": 0.6,
+  "ui_language": "auto"
+}

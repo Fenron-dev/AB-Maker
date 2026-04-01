@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings &amp; Automation - The Sonic Architect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-tint": "#c8bfff",
+            "on-primary": "#2e009c",
+            "surface-variant": "#32343e",
+            "on-primary-fixed": "#1a0063",
+            "primary-fixed-dim": "#c8bfff",
+            "primary-fixed": "#e5deff",
+            "tertiary": "#d4bbff",
+            "error-container": "#93000a",
+            "surface-bright": "#373943",
+            "on-secondary-fixed": "#0e1b34",
+            "on-tertiary": "#400688",
+            "on-surface-variant": "#c9c4d7",
+            "on-error": "#690005",
+            "secondary": "#bac6e7",
+            "on-tertiary-fixed-variant": "#582a9f",
+            "surface-container-high": "#282933",
+            "background": "#11131c",
+            "on-primary-fixed-variant": "#4420c3",
+            "surface-container-lowest": "#0c0e17",
+            "on-primary-container": "#d7ceff",
+            "inverse-primary": "#5d41db",
+            "surface": "#11131c",
+            "on-tertiary-container": "#e0ccff",
+            "on-surface": "#e1e1ef",
+            "surface-container": "#1d1f29",
+            "surface-container-low": "#191b24",
+            "secondary-fixed": "#d9e2ff",
+            "tertiary-fixed-dim": "#d4bbff",
+            "surface-container-highest": "#32343e",
+            "error": "#ffb4ab",
+            "secondary-fixed-dim": "#bac6e7",
+            "tertiary-fixed": "#ebdcff",
+            "secondary-container": "#3b4662",
+            "outline": "#938ea0",
+            "surface-dim": "#11131c",
+            "on-background": "#e1e1ef",
+            "inverse-on-surface": "#2e303a",
+            "on-secondary": "#24304a",
+            "tertiary-container": "#6d43b5",
+            "on-tertiary-fixed": "#260058",
+            "inverse-surface": "#e1e1ef",
+            "outline-variant": "#484554",
+            "on-secondary-container": "#a9b5d5",
+            "on-error-container": "#ffdad6",
+            "primary-container": "#5a3ed8",
+            "primary": "#c8bfff",
+            "on-secondary-fixed-variant": "#3b4662"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background-color: #11131c;
+      color: #e1e1ef;
+      font-family: 'Inter', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #32343e;
+      border-radius: 10px;
+    }
+    .glass-panel {
+      background: rgba(40, 41, 51, 0.8);
+      backdrop-filter: blur(20px);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="flex items-center justify-between px-6 h-20 w-full z-50 bg-[#11131c] fixed top-0 docked full-width">
+<div class="flex items-center gap-4">
+<button class="text-[#c8bfff] hover:bg-[#32343e] transition-colors duration-300 p-2 rounded-full active:opacity-80 active:scale-95 transition-all">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<h1 class="text-[#c8bfff] font-manrope font-extrabold tracking-widest uppercase text-lg">The Sonic Architect</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="professional male user avatar portrait with neutral background and soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCM9ELz9GpmxB0_9gSQGEw5aWSs9W-5h0TkAuzXjQLkR_q_fislEv8B5aCCOLGm3XyzTPcPMlqcSeGuhQOuA47zfyINa33Yz17blMqUYna04zcqdFSWs9iL_1TfP7L4Y-c2lWpdjHT6IdtAEoYntFofGStWbU3ot2vWJ5KRd7vkgwmvvbvv7GUT6ASb4IKH6laUS5JJ6B8zo8R6KpIuZ2LU__mdSEICdNeFvO0TSsDNkViLDU-7trdyVxdivPetYgxLrWYWirI-fMJT"/>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-5xl mx-auto space-y-10 custom-scrollbar">
+<!-- Hero Header -->
+<section class="space-y-2">
+<h2 class="font-headline font-bold text-3xl tracking-tight text-primary">Settings &amp; Automation</h2>
+<p class="font-body text-on-surface-variant text-sm">Configure your studio environment and intelligent workflows.</p>
+</section>
+<!-- Global Storage Paths Section -->
+<section class="space-y-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">folder_shared</span>
+<h3 class="font-headline font-bold text-xl text-on-surface">Global Storage Paths</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Input Folder -->
+<div class="bg-surface-container rounded-xl p-6 space-y-4">
+<label class="font-label text-[11px] font-medium tracking-wider uppercase text-on-surface-variant">Default Input Folder</label>
+<div class="flex gap-2">
+<div class="flex-grow bg-surface-container-lowest rounded-lg px-4 py-3 flex items-center group focus-within:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-outline text-sm mr-3">input</span>
+<input class="bg-transparent border-none text-sm text-on-surface w-full focus:ring-0 cursor-default" readonly="" type="text" value="C:/Users/Studio/Audio/Raw_Drafts"/>
+</div>
+<button class="bg-surface-container-highest text-primary px-4 rounded-lg font-medium text-sm hover:bg-surface-bright transition-all active:scale-95">Browse</button>
+</div>
+</div>
+<!-- Output Folder -->
+<div class="bg-surface-container rounded-xl p-6 space-y-4">
+<label class="font-label text-[11px] font-medium tracking-wider uppercase text-on-surface-variant">Default Output Folder</label>
+<div class="flex gap-2">
+<div class="flex-grow bg-surface-container-lowest rounded-lg px-4 py-3 flex items-center group focus-within:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-outline text-sm mr-3">output</span>
+<input class="bg-transparent border-none text-sm text-on-surface w-full focus:ring-0 cursor-default" readonly="" type="text" value="C:/Users/Studio/Audio/Exports"/>
+</div>
+<button class="bg-surface-container-highest text-primary px-4 rounded-lg font-medium text-sm hover:bg-surface-bright transition-all active:scale-95">Browse</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Workflow Automation Section (Bento Grid Inspired) -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 bg-surface-container rounded-xl p-8 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -mr-32 -mt-32"></div>
+<div class="relative z-10 space-y-8">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">auto_mode</span>
+<h3 class="font-headline font-bold text-xl text-on-surface">Watch Folder Automation</h3>
+</div>
+<!-- Toggle Switch -->
+<label class="inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="relative w-14 h-7 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-on-surface after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="space-y-6">
+<div class="space-y-2">
+<label class="font-label text-[11px] font-medium tracking-wider uppercase text-on-surface-variant">Choose TTS Profile for Automation</label>
+<div class="relative group">
+<select class="w-full bg-surface-container-lowest border-none rounded-lg py-4 px-4 text-on-surface appearance-none focus:ring-1 focus:ring-primary/30 transition-all cursor-pointer">
+<option>Professional Narrative</option>
+<option>Fast Preview</option>
+<option selected="">Expressive Fiction</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+</div>
+</div>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed bg-surface-container-low/50 p-4 rounded-lg border-l-2 border-primary/40">
+              When active, files added to the <span class="text-primary font-medium">Input Folder</span> will automatically start conversion using the selected profile. Results will be delivered to the <span class="text-primary font-medium">Output Folder</span>.
+            </p>
+</div>
+</div>
+</div>
+<!-- Quick Info Card -->
+<div class="bg-gradient-to-br from-primary-container to-surface-container-highest rounded-xl p-8 flex flex-col justify-between text-on-primary-container">
+<span class="material-symbols-outlined text-4xl opacity-50">bolt</span>
+<div class="space-y-2">
+<h4 class="font-headline font-bold text-lg">Instant Sync</h4>
+<p class="text-xs opacity-80 leading-relaxed">Automation bypasses the manual queue, prioritizing local file system changes for near-zero latency processing.</p>
+</div>
+</div>
+</section>
+<!-- Application Preferences Section -->
+<section class="space-y-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h3 class="font-headline font-bold text-xl text-on-surface">Application Preferences</h3>
+</div>
+<div class="bg-surface-container rounded-xl overflow-hidden divide-y divide-surface-container-highest/30">
+<!-- Theme Selection -->
+<div class="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-surface-bright/20 transition-colors">
+<div class="space-y-1">
+<p class="font-headline font-bold text-on-surface">Visual Theme</p>
+<p class="text-xs text-on-surface-variant">Adjust the look and feel of the obsidian studio.</p>
+</div>
+<div class="flex bg-surface-container-lowest p-1 rounded-xl">
+<button class="px-6 py-2 rounded-lg text-xs font-medium bg-surface-container-highest text-primary">Dark</button>
+<button class="px-6 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors">Light</button>
+<button class="px-6 py-2 rounded-lg text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors">System</button>
+</div>
+</div>
+<!-- Language Selection -->
+<div class="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-surface-bright/20 transition-colors">
+<div class="space-y-1">
+<p class="font-headline font-bold text-on-surface">Language &amp; Locale</p>
+<p class="text-xs text-on-surface-variant">Primary interface language and regional formatting.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="bg-surface-container-lowest px-4 py-2 rounded-lg text-sm flex items-center gap-2 cursor-pointer border border-transparent hover:border-primary/20">
+<span class="material-symbols-outlined text-primary text-lg">language</span>
+<span>English (US)</span>
+<span class="material-symbols-outlined text-outline text-sm">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Startup Options -->
+<div class="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:bg-surface-bright/20 transition-colors">
+<div class="space-y-1">
+<p class="font-headline font-bold text-on-surface">Startup Behavior</p>
+<p class="text-xs text-on-surface-variant">Control how the architect initializes on system boot.</p>
+</div>
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 rounded border-outline-variant bg-surface-container-lowest text-primary focus:ring-offset-background focus:ring-primary" type="checkbox"/>
+<span class="text-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Launch minimized to system tray</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded border-outline-variant bg-surface-container-lowest text-primary focus:ring-offset-background focus:ring-primary" type="checkbox"/>
+<span class="text-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Reopen last project on startup</span>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Danger Zone (Extra UI Detail) -->
+<section class="pt-8">
+<div class="bg-error-container/10 border border-error-container/20 rounded-xl p-6 flex items-center justify-between">
+<div class="space-y-1">
+<p class="font-headline font-bold text-error">Reset Application State</p>
+<p class="text-xs text-on-error-container/60">Wipe all local settings and automation rules.</p>
+</div>
+<button class="px-6 py-2 border border-error-container/40 text-error rounded-lg text-sm font-medium hover:bg-error-container/20 transition-all">Reset All</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Persistent Shell) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#11131c]/80 backdrop-blur-xl border-t border-[#32343e]/15 shadow-[0_-10px_30px_rgba(12,14,23,0.3)]">
+<button class="flex flex-col items-center justify-center text-[#e1e1ef]/50 hover:text-[#c8bfff] transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">home_max</span>
+<span class="font-inter text-[10px] font-medium tracking-wider uppercase">Studio</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#e1e1ef]/50 hover:text-[#c8bfff] transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">library_music</span>
+<span class="font-inter text-[10px] font-medium tracking-wider uppercase">Library</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#e1e1ef]/50 hover:text-[#c8bfff] transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">auto_mode</span>
+<span class="font-inter text-[10px] font-medium tracking-wider uppercase">Automation</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#c8bfff] bg-[#32343e]/50 rounded-xl px-4 py-1 active:scale-90 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">tune</span>
+<span class="font-inter text-[10px] font-medium tracking-wider uppercase">Settings</span>
+</button>
+</nav>
+</body></html>

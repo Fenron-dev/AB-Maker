@@ -1,0 +1,28 @@
+# AB-Maker – Python dependencies
+# Install: pip install -r requirements.txt
+
+# Web server
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+python-multipart>=0.0.9
+
+# Desktop window (pywebview needs a Qt or GTK backend on Linux)
+pywebview>=5.0.0
+PyQt6>=6.4.0
+PyQt6-WebEngine>=6.4.0
+qtpy>=2.4.0
+
+# TTS
+qwen-tts>=0.1.0
+
+# Audio
+soundfile>=0.12.1
+numpy>=1.24.0
+
+# Book formats
+ebooklib>=0.18
+beautifulsoup4>=4.12.0
+pymupdf>=1.24.0
+
+# PyTorch – install separately for GPU support, see setup scripts
+# torch>=2.0.0
