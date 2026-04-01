@@ -8,10 +8,11 @@ To add a new TTS engine:
 
 from .base import TTSEngine, Voice
 from .qwen3_tts import Qwen3TTSEngine
+from .vibevoice_tts import VibeVoiceEngine
 
 _ENGINES: list[TTSEngine] = [
     Qwen3TTSEngine(),
-    # Future engines go here, e.g. VibeVoiceEngine()
+    VibeVoiceEngine(),
 ]
 
 

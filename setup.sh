@@ -94,6 +94,14 @@ echo "  Installiere Abhängigkeiten (kann 5–15 Min. dauern)…"
 echo "  ✓ Alle Pakete installiert."
 echo ""
 
+# ── VibeVoice-Realtime (optional) ─────────────────────────────
+echo "  Installiere VibeVoice-Realtime Engine (optional)…"
+"$PIP" install \
+    "vibevoice[streamingtts] @ git+https://github.com/microsoft/VibeVoice.git" \
+    --quiet && echo "  ✓ VibeVoice installiert." \
+    || echo "  ! VibeVoice konnte nicht installiert werden – Engine wird übersprungen."
+echo ""
+
 # ── ffmpeg ────────────────────────────────────────────────────
 echo "  Prüfe ffmpeg…"
 if command -v ffmpeg &>/dev/null; then

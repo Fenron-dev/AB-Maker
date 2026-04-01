@@ -55,6 +55,12 @@ jobs:
       - name: Install project dependencies + PyInstaller
         run: pip install -r requirements.txt pyinstaller
 
+      - name: Install VibeVoice-Realtime
+        run: >
+          pip install
+          "vibevoice[streamingtts] @ git+https://github.com/microsoft/VibeVoice.git"
+        continue-on-error: true
+
       # ── Build ────────────────────────────────────────────────────
       - name: Build (Linux)
         if: runner.os == 'Linux'

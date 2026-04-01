@@ -83,6 +83,16 @@ echo   Installiere Abhängigkeiten...
 echo   OK: Pakete installiert.
 echo.
 
+:: ── VibeVoice-Realtime (optional) ─────────────────────────
+echo   Installiere VibeVoice-Realtime Engine (optional)...
+"%PIP%" install "vibevoice[streamingtts] @ git+https://github.com/microsoft/VibeVoice.git" --quiet
+if %errorlevel% == 0 (
+    echo   OK: VibeVoice installiert.
+) else (
+    echo   ! VibeVoice konnte nicht installiert werden - Engine wird uebersprungen.
+)
+echo.
+
 :: ── Verzeichnisse ─────────────────────────────────────────
 if not exist "%~dp0data" mkdir "%~dp0data"
 echo   OK: Verzeichnisse angelegt.
