@@ -29,7 +29,11 @@ export class TTSConfigView {
       clone_transcript:   '',
       model_size:         appCfg.default_model_size || '1.7b',
     };
-    this._selectedEngine = appCfg.default_engine || (this._engines[0]?.id ?? 'qwen3-tts');
+    const savedEngine = appCfg.default_engine || 'qwen3-tts';
+    const availableIds = this._engines.map(e => e.id);
+    this._selectedEngine = availableIds.includes(savedEngine)
+      ? savedEngine
+      : (this._engines[0]?.id ?? savedEngine);
 
     const eng = this._engines.find(e => e.id === this._selectedEngine) || this._engines[0];
     const voices    = eng?.voices    || [];
