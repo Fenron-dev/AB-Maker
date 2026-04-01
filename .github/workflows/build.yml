@@ -56,8 +56,9 @@ jobs:
         run: pip install -r requirements.txt pyinstaller
 
       - name: Install VibeVoice-Realtime
+        # --no-deps: vibevoice pins transformers==4.51.x which conflicts with qwen-tts (4.57.x)
         run: >
-          pip install
+          pip install --no-deps
           "vibevoice[streamingtts] @ git+https://github.com/microsoft/VibeVoice.git"
         continue-on-error: true
 

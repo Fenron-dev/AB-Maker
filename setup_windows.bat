@@ -84,8 +84,9 @@ echo   OK: Pakete installiert.
 echo.
 
 :: ── VibeVoice-Realtime (optional) ─────────────────────────
-echo   Installiere VibeVoice-Realtime Engine (optional)...
-"%PIP%" install "vibevoice[streamingtts] @ git+https://github.com/microsoft/VibeVoice.git" --quiet
+:: --no-deps prevents vibevoice from downgrading transformers (conflicts with qwen-tts)
+echo   Installiere VibeVoice-Realtime Engine (optional, --no-deps)...
+"%PIP%" install "vibevoice[streamingtts] @ git+https://github.com/microsoft/VibeVoice.git" --no-deps --quiet
 if %errorlevel% == 0 (
     echo   OK: VibeVoice installiert.
 ) else (

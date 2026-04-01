@@ -95,10 +95,13 @@ echo "  ✓ Alle Pakete installiert."
 echo ""
 
 # ── VibeVoice-Realtime (optional) ─────────────────────────────
-echo "  Installiere VibeVoice-Realtime Engine (optional)…"
+# vibevoice pins transformers==4.51.x which conflicts with qwen-tts (==4.57.x).
+# Install --no-deps to keep the existing transformers version.
+echo "  Installiere VibeVoice-Realtime Engine (optional, --no-deps)…"
 "$PIP" install \
     "vibevoice[streamingtts] @ git+https://github.com/microsoft/VibeVoice.git" \
-    --quiet && echo "  ✓ VibeVoice installiert." \
+    --no-deps --quiet \
+    && echo "  ✓ VibeVoice installiert." \
     || echo "  ! VibeVoice konnte nicht installiert werden – Engine wird übersprungen."
 echo ""
 
