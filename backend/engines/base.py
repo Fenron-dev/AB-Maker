@@ -53,6 +53,11 @@ class TTSEngine(ABC):
     # ── capabilities ─────────────────────────────────────────────
 
     @property
+    def is_available(self) -> bool:
+        """Return False if required packages are not installed in the current venv."""
+        return True
+
+    @property
     def supports_cloning(self) -> bool:
         return False
 
@@ -102,6 +107,7 @@ class TTSEngine(ABC):
             "id": self.id,
             "name": self.name,
             "description": self.description,
+            "is_available": self.is_available,
             "supports_cloning": self.supports_cloning,
             "supports_instruction": self.supports_instruction,
             "voices": [

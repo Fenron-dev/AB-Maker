@@ -59,6 +59,14 @@ class Qwen3TTSEngine(TTSEngine):
     # ── capabilities ─────────────────────────────────────────────
 
     @property
+    def is_available(self) -> bool:
+        try:
+            import qwen_tts  # noqa: F401
+            return True
+        except ImportError:
+            return False
+
+    @property
     def supports_cloning(self) -> bool:
         return True
 

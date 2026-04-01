@@ -6,6 +6,7 @@
 set -euo pipefail
 PROJEKT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 VENV="$PROJEKT/.venv"
+VENV_VV="$PROJEKT/.venv-vibevoice"
 
 clear
 echo "╔══════════════════════════════════════════════════════════╗"
@@ -13,11 +14,10 @@ echo "║       AB-Maker  –  Einrichtung                          ║"
 echo "╚══════════════════════════════════════════════════════════╝"
 echo ""
 echo "  Projektordner:  $PROJEKT"
-echo "  Python-Env:     $VENV"
 echo ""
 echo "  Was wird installiert:"
-echo "    ~400 MB  Python-Pakete (in .venv/ im Projektordner)"
-echo "    ~4,5 GB  KI-Modell    (beim ersten Start automatisch)"
+echo "    .venv/            – Qwen3-TTS  (~400 MB Pakete + ~4,5 GB Modell)"
+echo "    .venv-vibevoice/  – VibeVoice-Realtime (~400 MB Pakete + ~1,5 GB Modell)"
 echo ""
 echo "══════════════════════════════════════════════════════════"
 read -r -p "  Einrichtung starten? [j/N] " ANT
@@ -52,57 +52,78 @@ fi
 echo "  ✓ $($PYTHON_CMD --version) gefunden."
 echo ""
 
-# ── Virtuelle Umgebung ────────────────────────────────────────
+# ── Hilfsfunktion: PyTorch installieren ──────────────────────
+install_torch() {
+    local pip="$1"
+    if command -v nvidia-smi &>/dev/null; then
+        "$pip" install torch torchaudio --index-url https://download.pytorch.org/whl/cu121 --quiet
+    else
+        "$pip" install torch torchaudio --index-url https://download.pytorch.org/whl/cpu --quiet
+    fi
+}
+
+# ── Hilfsfunktion: Basis-App-Pakete installieren ─────────────
+install_base_deps() {
+    local pip="$1"
+    "$pip" install --upgrade pip setuptools wheel --quiet
+    "$pip" install \
+        fastapi "uvicorn[standard]" python-multipart \
+        pywebview PyQt6 PyQt6-WebEngine qtpy \
+        soundfile numpy \
+        ebooklib beautifulsoup4 pymupdf \
+        --quiet
+}
+
+# ╔══════════════════════════════════════════════════════════════╗
+# ║  Venv 1: Qwen3-TTS (.venv)                                  ║
+# ╚══════════════════════════════════════════════════════════════╝
+echo "══════════════════════════════════════════════════════════"
+echo "  [1/2] Qwen3-TTS Venv  →  .venv/"
+echo "══════════════════════════════════════════════════════════"
+
 if [ -d "$VENV" ]; then
     echo "  ℹ Virtuelle Umgebung existiert bereits."
 else
     echo "  Erstelle virtuelle Umgebung…"
     "$PYTHON_CMD" -m venv "$VENV"
-    echo "  ✓ Virtuelle Umgebung erstellt."
+    echo "  ✓ Erstellt."
 fi
 
 PIP="$VENV/bin/pip"
-PYTHON="$VENV/bin/python"
-echo ""
-
-# ── pip aktualisieren ─────────────────────────────────────────
-"$PIP" install --upgrade pip setuptools wheel --quiet
-
-# ── PyTorch (GPU-aware) ───────────────────────────────────────
 echo "  Erkenne Hardware…"
 if command -v nvidia-smi &>/dev/null; then
     GPU=$(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null | head -1)
     echo "  GPU: $GPU"
-    echo "  Installiere PyTorch mit CUDA…"
-    "$PIP" install torch torchaudio --index-url https://download.pytorch.org/whl/cu121 --quiet
-else
-    echo "  Keine NVIDIA-GPU erkannt – CPU-Modus."
-    "$PIP" install torch torchaudio --index-url https://download.pytorch.org/whl/cpu --quiet
 fi
-echo "  ✓ PyTorch installiert."
+install_base_deps "$PIP"
+install_torch "$PIP"
+"$PIP" install qwen-tts --quiet
+echo "  ✓ Qwen3-TTS Venv fertig."
 echo ""
 
-# ── Abhängigkeiten installieren ───────────────────────────────
-echo "  Installiere Abhängigkeiten (kann 5–15 Min. dauern)…"
-"$PIP" install \
-    fastapi "uvicorn[standard]" python-multipart \
-    pywebview PyQt6 PyQt6-WebEngine qtpy \
-    qwen-tts \
-    soundfile numpy \
-    ebooklib beautifulsoup4 pymupdf \
-    --quiet
-echo "  ✓ Alle Pakete installiert."
-echo ""
+# ╔══════════════════════════════════════════════════════════════╗
+# ║  Venv 2: VibeVoice (.venv-vibevoice)                        ║
+# ╚══════════════════════════════════════════════════════════════╝
+echo "══════════════════════════════════════════════════════════"
+echo "  [2/2] VibeVoice-Realtime Venv  →  .venv-vibevoice/"
+echo "══════════════════════════════════════════════════════════"
 
-# ── VibeVoice-Realtime (optional) ─────────────────────────────
-# vibevoice pins transformers==4.51.x which conflicts with qwen-tts (==4.57.x).
-# Install --no-deps to keep the existing transformers version.
-echo "  Installiere VibeVoice-Realtime Engine (optional, --no-deps)…"
-"$PIP" install \
+if [ -d "$VENV_VV" ]; then
+    echo "  ℹ Virtuelle Umgebung existiert bereits."
+else
+    echo "  Erstelle virtuelle Umgebung…"
+    "$PYTHON_CMD" -m venv "$VENV_VV"
+    echo "  ✓ Erstellt."
+fi
+
+PIP_VV="$VENV_VV/bin/pip"
+install_base_deps "$PIP_VV"
+install_torch "$PIP_VV"
+"$PIP_VV" install \
     "vibevoice[streamingtts] @ git+https://github.com/microsoft/VibeVoice.git" \
-    --no-deps --quiet \
-    && echo "  ✓ VibeVoice installiert." \
-    || echo "  ! VibeVoice konnte nicht installiert werden – Engine wird übersprungen."
+    --quiet \
+    && echo "  ✓ VibeVoice-Realtime Venv fertig." \
+    || echo "  ! VibeVoice konnte nicht installiert werden – Venv wird übersprungen."
 echo ""
 
 # ── ffmpeg ────────────────────────────────────────────────────
@@ -124,7 +145,7 @@ fi
 echo ""
 
 # ── Qt-Hinweis (X11) ──────────────────────────────────────────
-if [[ "$OSTYPE" == "linux-gnu"* ]] && [ -z "$WAYLAND_DISPLAY" ]; then
+if [[ "$OSTYPE" == "linux-gnu"* ]] && [ -z "${WAYLAND_DISPLAY:-}" ]; then
     echo "  Hinweis (X11): Falls Qt 'xcb'-Fehler auftritt:"
     if command -v pacman &>/dev/null; then
         echo "    sudo pacman -S xcb-util-cursor"
@@ -147,7 +168,7 @@ Type=Application
 Name=AB-Maker – The Sonic Architect
 Comment=Bücher in Hörbücher konvertieren
 Exec=bash -c 'cd "$PROJEKT" && bash "$PROJEKT/start.sh"'
-Terminal=false
+Terminal=true
 Icon=$PROJEKT/frontend/icon.png
 Categories=Audio;
 EOF
@@ -158,10 +179,8 @@ fi
 echo "══════════════════════════════════════════════════════════"
 echo "  ✓ Einrichtung abgeschlossen!"
 echo ""
-echo "  Starten:"
-echo "    bash \"$PROJEKT/start.sh\""
-echo ""
-echo "  Oder Doppelklick auf 'AB-Maker starten.desktop' (Linux)"
+echo "  Starten:  bash \"$PROJEKT/start.sh\""
+echo "  Beim Start wird die gewünschte TTS Engine gewählt."
 echo "══════════════════════════════════════════════════════════"
 echo ""
 read -r -p "  [Enter zum Schließen]"

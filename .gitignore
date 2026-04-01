@@ -4,6 +4,7 @@ __pycache__/
 *.pyo
 *.pyd
 .venv/
+.venv-vibevoice/
 
 # App data (contains local paths and personal files)
 data/config.json

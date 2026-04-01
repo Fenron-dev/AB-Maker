@@ -71,6 +71,14 @@ class VibeVoiceEngine(TTSEngine):
     # ── capabilities ─────────────────────────────────────────────
 
     @property
+    def is_available(self) -> bool:
+        try:
+            import vibevoice  # noqa: F401
+            return True
+        except ImportError:
+            return False
+
+    @property
     def supports_cloning(self) -> bool:
         return False
 

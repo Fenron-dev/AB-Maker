@@ -11,8 +11,7 @@ from .qwen3_tts import Qwen3TTSEngine
 from .vibevoice_tts import VibeVoiceEngine
 
 _ENGINES: list[TTSEngine] = [
-    Qwen3TTSEngine(),
-    VibeVoiceEngine(),
+    e for e in [Qwen3TTSEngine(), VibeVoiceEngine()] if e.is_available
 ]
 
 
