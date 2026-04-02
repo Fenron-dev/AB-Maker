@@ -107,6 +107,17 @@ if %errorlevel% == 0 (
 )
 echo.
 
+:: ── ffmpeg + sox ───────────────────────────────────────────
+echo   Installiere ffmpeg und sox...
+choco install ffmpeg sox --no-progress -y >nul 2>&1
+if %errorlevel% == 0 (
+    echo   OK: ffmpeg und sox installiert.
+) else (
+    echo   ! ffmpeg/sox konnten nicht installiert werden.
+    echo     Bitte manuell: https://ffmpeg.org  /  https://sox.sourceforge.net
+)
+echo.
+
 :: ── Verzeichnisse ──────────────────────────────────────────
 if not exist "%~dp0data" mkdir "%~dp0data"
 echo   OK: Verzeichnisse angelegt.

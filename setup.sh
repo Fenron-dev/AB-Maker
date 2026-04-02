@@ -126,22 +126,30 @@ install_torch "$PIP_VV"
     || echo "  ! VibeVoice konnte nicht installiert werden – Venv wird übersprungen."
 echo ""
 
-# ── ffmpeg ────────────────────────────────────────────────────
-echo "  Prüfe ffmpeg…"
-if command -v ffmpeg &>/dev/null; then
-    echo "  ✓ ffmpeg $(ffmpeg -version 2>&1 | head -1 | awk '{print $3}') gefunden."
-else
-    echo "  ffmpeg nicht gefunden – versuche Installation…"
-    if command -v pacman &>/dev/null; then
-        sudo pacman -S --noconfirm --needed ffmpeg 2>/dev/null && echo "  ✓ ffmpeg installiert." || echo "  ! ffmpeg konnte nicht installiert werden – M4B-Export nicht möglich."
-    elif command -v apt &>/dev/null; then
-        sudo apt install -y ffmpeg 2>/dev/null && echo "  ✓ ffmpeg installiert." || echo "  ! ffmpeg konnte nicht installiert werden."
-    elif command -v brew &>/dev/null; then
-        brew install ffmpeg 2>/dev/null && echo "  ✓ ffmpeg installiert." || echo "  ! ffmpeg konnte nicht installiert werden."
+# ── ffmpeg + sox ──────────────────────────────────────────────
+for TOOL in ffmpeg sox; do
+    echo "  Prüfe $TOOL…"
+    if command -v "$TOOL" &>/dev/null; then
+        echo "  ✓ $TOOL gefunden."
     else
-        echo "  ! Bitte ffmpeg manuell installieren: https://ffmpeg.org/download.html"
+        echo "  $TOOL nicht gefunden – versuche Installation…"
+        if command -v pacman &>/dev/null; then
+            sudo pacman -S --noconfirm --needed "$TOOL" 2>/dev/null \
+                && echo "  ✓ $TOOL installiert." \
+                || echo "  ! $TOOL konnte nicht installiert werden."
+        elif command -v apt &>/dev/null; then
+            sudo apt install -y "$TOOL" 2>/dev/null \
+                && echo "  ✓ $TOOL installiert." \
+                || echo "  ! $TOOL konnte nicht installiert werden."
+        elif command -v brew &>/dev/null; then
+            brew install "$TOOL" 2>/dev/null \
+                && echo "  ✓ $TOOL installiert." \
+                || echo "  ! $TOOL konnte nicht installiert werden."
+        else
+            echo "  ! Bitte $TOOL manuell installieren."
+        fi
     fi
-fi
+done
 echo ""
 
 # ── Qt-Hinweis (X11) ──────────────────────────────────────────

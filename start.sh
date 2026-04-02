@@ -41,4 +41,5 @@ if [ -z "${QT_QPA_PLATFORM:-}" ] && [ -n "${WAYLAND_DISPLAY:-}" ]; then
     fi
 fi
 
-exec "$PYTHON" "$PROJEKT/main.py" "$@"
+# Suppress noisy GTK import warning from pywebview (Qt is used instead)
+exec "$PYTHON" "$PROJEKT/main.py" "$@" 2> >(grep -v "GTK cannot be loaded\|import webview.platforms.gtk\|import gi\|ModuleNotFoundError: No module named 'gi'" >&2)
