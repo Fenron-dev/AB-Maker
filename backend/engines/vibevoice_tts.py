@@ -158,16 +158,22 @@ class VibeVoiceEngine(TTSEngine):
             except ImportError:
                 pass
 
+        import warnings
+
         _cb("Loading processor…")
         self._processor = VibeVoiceStreamingProcessor.from_pretrained(local_path)
 
         _cb(f"Initialising model on {device}…")
-        self._model = VibeVoiceStreamingForConditionalGenerationInference.from_pretrained(
-            local_path,
-            torch_dtype=load_dtype,
-            device_map=device,
-            attn_implementation=attn_impl,
-        )
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", message=".*not initialized from the model checkpoint.*")
+            warnings.filterwarnings("ignore", message=".*should probably be trained.*")
+            self._model = VibeVoiceStreamingForConditionalGenerationInference.from_pretrained(
+                local_path,
+                torch_dtype=load_dtype,
+                device_map=device,
+                attn_implementation=attn_impl,
+            )
+        _cb("Note: some encoder weights (stage 6) are not in the checkpoint – audio quality may vary.")
         self._model.eval()
         self._model.set_ddpm_inference_steps(num_steps=5)
         self._device = device
