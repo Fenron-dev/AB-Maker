@@ -39,14 +39,20 @@ def _voice_url(voice_id: str) -> str:
 
 
 def _move_to_device(obj, device):
-    """Recursively move tensors in a nested dict/list structure to device."""
+    """Recursively move tensors to device, preserving all object types."""
     import torch
     if isinstance(obj, torch.Tensor):
         return obj.to(device)
     if isinstance(obj, dict):
         return {k: _move_to_device(v, device) for k, v in obj.items()}
-    if isinstance(obj, list):
-        return [_move_to_device(v, device) for v in obj]
+    if isinstance(obj, (list, tuple)):
+        moved = [_move_to_device(v, device) for v in obj]
+        return type(obj)(moved)
+    # ModelOutput and other dataclass-like objects: move attributes in-place
+    if hasattr(obj, "__dict__"):
+        for k, v in obj.__dict__.items():
+            setattr(obj, k, _move_to_device(v, device))
+        return obj
     return obj
 
 
