@@ -21,15 +21,21 @@ _MODEL_ID = "microsoft/VibeVoice-Realtime-0.5B"
 _SAMPLE_RATE = 24_000
 
 _VOICES: list[Voice] = [
-    Voice("carter", "Carter", "English", "Clear male voice"),
-    Voice("wayne",  "Wayne",  "English", "Warm male voice"),
+    Voice("en-Carter_man",   "Carter",   "English", "Clear male voice"),
+    Voice("en-Davis_man",    "Davis",    "English", "Neutral male voice"),
+    Voice("en-Frank_man",    "Frank",    "English", "Deep male voice"),
+    Voice("en-Mike_man",     "Mike",     "English", "Warm male voice"),
+    Voice("en-Emma_woman",   "Emma",     "English", "Clear female voice"),
+    Voice("en-Grace_woman",  "Grace",    "English", "Warm female voice"),
+    Voice("de-Spk0_man",     "DE Male",  "German",  "German male voice"),
+    Voice("de-Spk1_woman",   "DE Female","German",  "German female voice"),
 ]
 
-# Raw binary downloads from the VibeVoice GitHub demo folder
-_VOICE_URLS: dict[str, str] = {
-    "carter": "https://github.com/microsoft/VibeVoice/raw/main/demo/voices/streaming_model/carter.pt",
-    "wayne":  "https://github.com/microsoft/VibeVoice/raw/main/demo/voices/streaming_model/wayne.pt",
-}
+_BASE_URL = "https://github.com/microsoft/VibeVoice/raw/main/demo/voices/streaming_model"
+
+# Filename = voice id + ".pt"
+def _voice_url(voice_id: str) -> str:
+    return f"{_BASE_URL}/{voice_id}.pt"
 
 
 def _move_to_device(obj, device):
@@ -204,7 +210,11 @@ class VibeVoiceEngine(TTSEngine):
 
         import torch
 
-        speaker = config.get("speaker", "carter")
+        speaker = config.get("speaker", "en-Carter_man")
+        # Fall back to first available voice if the stored speaker ID is from another engine
+        valid_ids = {v.id for v in _VOICES}
+        if speaker not in valid_ids:
+            speaker = _VOICES[0].id
         voice_cpu = self._get_voice(speaker)
 
         # Deep-copy + move to device — generate() mutates the KV cache
@@ -254,7 +264,7 @@ class VibeVoiceEngine(TTSEngine):
         # Check if already downloaded
         local_pt = voice_dir / f"{speaker}.pt"
         if not local_pt.exists():
-            url = _VOICE_URLS.get(speaker, _VOICE_URLS["carter"])
+            url = _voice_url(speaker)
             voice_dir.mkdir(parents=True, exist_ok=True)
             urllib.request.urlretrieve(url, str(local_pt))
 
