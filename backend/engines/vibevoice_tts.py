@@ -231,12 +231,17 @@ class VibeVoiceEngine(TTSEngine):
             if torch.is_tensor(inputs[key]):
                 inputs[key] = inputs[key].to(self._device)
 
-        # Second deep-copy needed because generate() also mutates all_prefilled_outputs
+        # Pull the TTS-specific keys out of inputs before splatting,
+        # so they are not passed twice as keyword arguments.
+        tts_lm_input_ids      = inputs.pop("tts_lm_input_ids")
+        tts_lm_attention_mask = inputs.pop("tts_lm_attention_mask")
+        tts_text_ids          = inputs.pop("tts_text_ids")
+
         outputs = self._model.generate(
             **inputs,
-            tts_lm_input_ids=inputs["tts_lm_input_ids"],
-            tts_lm_attention_mask=inputs["tts_lm_attention_mask"],
-            tts_text_ids=inputs["tts_text_ids"],
+            tts_lm_input_ids=tts_lm_input_ids,
+            tts_lm_attention_mask=tts_lm_attention_mask,
+            tts_text_ids=tts_text_ids,
             all_prefilled_outputs=_move_to_device(copy.deepcopy(voice_cpu), self._device),
             cfg_scale=1.5,
             tokenizer=self._processor.tokenizer,
